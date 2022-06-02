@@ -1,0 +1,32 @@
+.tableHeadContainer {
+  display: flex;
+}
+
+.tableSubHeading {
+  margin-left: $spacing;
+}
+
+.toolTip {
+  max-width: 220px;
+}
+
+.chartContainer {
+  display: flex;
+  align-items: center;
+}
+
+.chartContainerInfo {
+  min-width: $spacing * 7;
+}
+
+.chart {
+  width: 125px;
+}
+
+.danger {
+  color: var(--danger);
+}
+
+.success {
+  color: var(--success);
+}

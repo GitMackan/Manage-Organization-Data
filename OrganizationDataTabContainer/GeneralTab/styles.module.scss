@@ -1,0 +1,17 @@
+.radioButtonContainer {
+  display: flex;
+  align-items: center;
+
+  b {
+    margin-right: 10px;
+  }
+
+  svg {
+    margin-top: 26px;
+    margin-right: 4px;
+  }
+}
+
+.status {
+  font-size: 8px;
+}

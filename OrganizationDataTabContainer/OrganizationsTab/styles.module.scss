@@ -1,0 +1,19 @@
+.tableHeadContainer {
+  display: flex;
+}
+
+.tableSubHeading {
+  margin-left: $spacing;
+}
+
+.packageList {
+  list-style: inside;
+
+  .packageListItem {
+    list-style-type: disc;
+  }
+}
+
+.createdBy {
+  margin-left: math.div($spacing, 2);
+}

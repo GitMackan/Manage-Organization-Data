@@ -1,0 +1,142 @@
+.tableWrapper {
+  display: block;
+  max-width: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  border-radius: 5px;
+  margin-top: $spacing * 1.5;
+  margin-bottom: $spacing * 1.5;
+}
+
+table {
+  background-color: var(--solid);
+  border-radius: $border-radius;
+  box-shadow: var(--box-shadow);
+
+  tbody tr:nth-child(odd),
+  thead tr:nth-child(odd) {
+    background-color: var(--blend);
+  }
+
+  thead tr:nth-child(odd) th {
+    font-size: 16px;
+  }
+
+  th {
+    text-align: inherit;
+    white-space: nowrap;
+    font-size: $font-size-075;
+    line-height: 19px;
+  }
+
+  th,
+  td {
+    padding: $spacing;
+    width: 1%;
+    height: 56px;
+    white-space: nowrap;
+
+    &:not(:last-child) {
+      border-right: 1px solid var(--strong-blend);
+    }
+  }
+}
+
+.sorted {
+  color: var(--primary);
+}
+.red {
+  color: rgb(241, 74, 74);
+}
+
+.green {
+  color: green;
+}
+
+.input_container {
+  margin-top: 20px;
+}
+
+.radioButtons {
+  flex-direction: row;
+  margin-top: $spacing * 1.5;
+
+  label {
+    &:not(:last-child) {
+      margin-right: $spacing;
+      margin-bottom: 0;
+    }
+  }
+}
+
+.tableHeadContainer {
+  display: flex;
+}
+
+.tableSubHeading {
+  margin-left: $spacing;
+}
+
+.packageList {
+  list-style: inside;
+
+  .packageListItem {
+    list-style-type: disc;
+  }
+}
+
+.toolTip {
+  max-width: 220px;
+}
+.radioButtonContainer {
+  display: flex;
+  align-items: center;
+
+  b {
+    margin-right: 10px;
+  }
+
+  svg {
+    margin-top: 26px;
+    margin-right: 4px;
+  }
+}
+
+.impression {
+  margin-right: $spacing;
+}
+
+.chartContainer {
+  display: flex;
+  align-items: center;
+}
+.chartContainerInfo {
+  min-width: $spacing * 7;
+}
+.chart {
+  width: 125px;
+}
+.createdBy {
+  margin-left: math.div($spacing, 2);
+}
+
+/*
+// Sticky first column
+td,
+th {
+  &:first-child {
+    position: sticky;
+    left: 0;
+    top: 0;
+
+    &:nth-child(odd) {
+      background-color: red;
+    }
+  }
+}
+
+._sticky_ajopw_53 {
+  position: initial;
+  background-color: blue;
+}
+*/

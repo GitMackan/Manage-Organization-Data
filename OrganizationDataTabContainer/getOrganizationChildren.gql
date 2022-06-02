@@ -1,0 +1,223 @@
+query GetOrganizationChildren(
+  $id: ID!
+  $timePeriodStart: DateTime
+  $timePeriodEnd: DateTime
+  $previousTimePeriodstart: DateTime
+  $previousTimePeriodEnd: DateTime
+) {
+  organization(id: $id) {
+    id
+    name
+    state
+    type
+    descendingOrganizations {
+      nodes {
+        name
+        id
+        type
+        state
+        activeAt
+        createdAt
+        createdBy {
+          id
+          account {
+            id
+            avatar {
+              id
+              originalUrl
+            }
+          }
+          protectedInformation {
+            id
+            name
+          }
+        }
+        configItems {
+          nodes {
+            id
+            configKey {
+              id
+              identifier
+            }
+            attachment {
+              id
+              url(variant: { width: 25, height: 25, method: resize_to_fit })
+            }
+          }
+        }
+        statistics {
+          activitesLast14Days: programParticipantScheduledEvents(
+            scheduledBefore: $timePeriodEnd
+            scheduledAfter: $timePeriodStart
+          ) {
+            totalCount
+          }
+          completed: programParticipantScheduledEvents(
+            status: ["PASSED", "FAILED", "EXCUSED"]
+            scheduledAfter: $timePeriodStart
+            scheduledBefore: $timePeriodEnd
+          ) {
+            totalCount
+          }
+          missed: programParticipantScheduledEvents(
+            missed: true
+            scheduledBefore: $timePeriodEnd
+            scheduledAfter: $timePeriodStart
+          ) {
+            totalCount
+          }
+          waitingToBeGraded: programParticipantScheduledEvents(
+            status: ["WAITING_TO_BE_GRADED"]
+            scheduledBefore: $timePeriodEnd
+            scheduledAfter: $timePeriodStart
+          ) {
+            totalCount
+          }
+          positiveImpressions: impressions(positive: true) {
+            groupBy(
+              period: DAY
+              method: COUNT
+              startsAt: $timePeriodStart
+              endsAt: $timePeriodEnd
+            ) {
+              key
+              value
+            }
+          }
+          negativeImpressions: impressions(positive: false) {
+            groupBy(
+              period: DAY
+              method: COUNT
+              startsAt: $timePeriodStart
+              endsAt: $timePeriodEnd
+            ) {
+              key
+              value
+            }
+          }
+          totalImpressions: impressions {
+            groupBy(
+              period: DAY
+              method: COUNT
+              startsAt: $timePeriodStart
+              endsAt: $timePeriodEnd
+            ) {
+              key
+              value
+            }
+          }
+          studentPresent14DaysAverageTimeSpentOnPlatformInMs: analyticsUserActivitySessions(
+            authorizationRoleIds: "811cdb4f-bfd1-4b15-af5b-fe1e9407ba3e"
+          ) {
+            groupBy(
+              column: active_duration_ms
+              method: AVERAGE
+              period: DAY
+              startsAt: $timePeriodStart
+              endsAt: $timePeriodEnd
+            ) {
+              value
+            }
+          }
+          studentFourteenDaysBeforePresentAverageTimeSpentOnPlatformInMs: analyticsUserActivitySessions(
+            authorizationRoleIds: "811cdb4f-bfd1-4b15-af5b-fe1e9407ba3e"
+          ) {
+            groupBy(
+              column: active_duration_ms
+              method: AVERAGE
+              period: DAY
+              startsAt: $previousTimePeriodstart
+              endsAt: $previousTimePeriodEnd
+            ) {
+              value
+            }
+          }
+          staffPresent14DaysAverageTimeSpentOnPlatformInMs: analyticsUserActivitySessions(
+            authorizationRoleIds: [
+              "eb9205dc-c23f-4d1c-9ba9-321e72e808ec"
+              "2cb64e2b-4a87-4802-a488-8c1f88c0b713"
+            ]
+          ) {
+            groupBy(
+              column: active_duration_ms
+              method: AVERAGE
+              period: DAY
+              startsAt: $timePeriodStart
+              endsAt: $timePeriodEnd
+            ) {
+              value
+            }
+          }
+          staffFourteenDaysBeforePresentAverageTimeSpentOnPlatformInMs: analyticsUserActivitySessions(
+            authorizationRoleIds: [
+              "eb9205dc-c23f-4d1c-9ba9-321e72e808ec"
+              "2cb64e2b-4a87-4802-a488-8c1f88c0b713"
+            ]
+          ) {
+            groupBy(
+              column: active_duration_ms
+              method: AVERAGE
+              period: DAY
+              startsAt: $previousTimePeriodstart
+              endsAt: $previousTimePeriodEnd
+            ) {
+              value
+            }
+          }
+          classrooms {
+            groupBy(
+              startsAt: $timePeriodStart
+              endsAt: $timePeriodEnd
+              period: WEEK
+              method: COUNT
+            ) {
+              value
+            }
+            totalCount
+          }
+          studentUsers: users(roles: ["student"]) {
+            totalCount
+          }
+          activeStudentUsers: users(roles: ["student"], active: true) {
+            groupBy(method: COUNT, period: DAY) {
+              value
+            }
+            totalCount
+          }
+          activeStudentUsersPreviousPeriod: users(roles: ["student"], active: true) {
+            groupBy(period: DAY, method: COUNT) {
+              value
+            }
+          }
+          currentActiveUsers: users(roles: ["student"], active: true) {
+            groupBy(method: COUNT, period: DAY) {
+              value
+            }
+          }
+          previousActiveUsers: users(roles: ["student"], active: true) {
+            groupBy(method: COUNT, period: DAY) {
+              value
+            }
+          }
+
+          staffUsers: users(roles: ["administrator", "teacher"]) {
+            totalCount
+          }
+          activeStaffUsers: users(roles: ["administrator", "teacher"], active: true) {
+            totalCount
+          }
+        }
+        packages {
+          totalCount
+          nodes {
+            id
+            authorizationPackage {
+              name
+              id
+            }
+          }
+        }
+      }
+    }
+  }
+}
